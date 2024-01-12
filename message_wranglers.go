@@ -10,43 +10,43 @@ import (
  */
 
 /**
- * Interface MessageHandlerInterface defines the contract for handling Kafka messages.
+ * Interface MessageWranglerInterface defines the contract for handling Kafka messages.
  */
-type MessageHandlerInterface interface {
-    HandleMessage(*kafka.Message) (interface{}, error)
+type MessageWranglerInterface interface {
+    WrangleMessage(*kafka.Message) (interface{}, error)
 }
 
-type JsonHandler struct{}
-func (j JsonHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+type JsonWrangler struct{}
+func (j JsonWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
     return MessageToJson(m)
 }
 
-type StringHandler struct{}
-func (s StringHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+type StringWrangler struct{}
+func (s StringWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
     return MessageToString(m)
 }
 
-type BytesHandler struct{}
-func (b BytesHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+type BytesWrangler struct{}
+func (b BytesWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
 	return MessageToBytes(m)
 }
 
-type MapHandler struct{}
-func (mh MapHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+type MapWrangler struct{}
+func (mh MapWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
 	return MessageToMap(m)
 }
 
-type MapFieldsHandler struct{
+type MapFieldsWrangler struct{
 	Fields []string
 }
-func (mfh MapFieldsHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+func (mfh MapFieldsWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
 	return MessageToMapFields(m, mfh.Fields)
 }
 
-type ContainsFieldsHandler struct{
+type ContainsFieldsWrangler struct{
 	Fields []string
 }
-func (cfh ContainsFieldsHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+func (cfh ContainsFieldsWrangler) WrangleMessage(m *kafka.Message) (interface{}, error) {
 	return MessageContainsFields(m, cfh.Fields)
 }
 
@@ -141,8 +141,8 @@ func MessageContainsFields(messageData *kafka.Message, fields []string) (bool, e
 	return true, nil
 }
 
-func MessageHandler(messageData *kafka.Message, handler MessageHandlerInterface) any {
-    dat, err := handler.HandleMessage(messageData)
+func MessageWrangler(messageData *kafka.Message, Wrangler MessageWranglerInterface) any {
+    dat, err := Wrangler.WrangleMessage(messageData)
     if err != nil {
         log.Println("Error handling message:", err)
         return nil
