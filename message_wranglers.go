@@ -5,10 +5,17 @@ import (
 	"log"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 )
+/**
+ * Package kafkamessagehelpers provides helper functions for working with Kafka messages.
+ */
 
+/**
+ * Interface MessageHandlerInterface defines the contract for handling Kafka messages.
+ */
 type MessageHandlerInterface interface {
     HandleMessage(*kafka.Message) (interface{}, error)
 }
+
 type JsonHandler struct{}
 func (j JsonHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
     return MessageToJson(m)
@@ -142,3 +149,6 @@ func MessageHandler(messageData *kafka.Message, handler MessageHandlerInterface)
     }
     return dat
 }
+
+
+
