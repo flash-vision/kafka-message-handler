@@ -2,9 +2,49 @@ package kafkamessagehelpers
 
 import (
 	"encoding/json"
-
+	"log"
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 )
+
+type MessageHandlerInterface interface {
+    HandleMessage(*kafka.Message) (interface{}, error)
+}
+type JsonHandler struct{}
+func (j JsonHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+    return MessageToJson(m)
+}
+
+type StringHandler struct{}
+func (s StringHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+    return MessageToString(m)
+}
+
+type BytesHandler struct{}
+func (b BytesHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+	return MessageToBytes(m)
+}
+
+type MapHandler struct{}
+func (mh MapHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+	return MessageToMap(m)
+}
+
+type MapFieldsHandler struct{
+	Fields []string
+}
+func (mfh MapFieldsHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+	return MessageToMapFields(m, mfh.Fields)
+}
+
+type ContainsFieldsHandler struct{
+	Fields []string
+}
+func (cfh ContainsFieldsHandler) HandleMessage(m *kafka.Message) (interface{}, error) {
+	return MessageContainsFields(m, cfh.Fields)
+}
+
+
+
 
 func MessageToJson(messageData *kafka.Message) (string, error) {
 	// Convert the message value to a string
@@ -92,4 +132,13 @@ func MessageContainsFields(messageData *kafka.Message, fields []string) (bool, e
 		}
 	}
 	return true, nil
+}
+
+func MessageHandler(messageData *kafka.Message, handler MessageHandlerInterface) any {
+    dat, err := handler.HandleMessage(messageData)
+    if err != nil {
+        log.Println("Error handling message:", err)
+        return nil
+    }
+    return dat
 }
