@@ -1,4 +1,4 @@
-module github.com/flash-vision/kafka-message-helpers
+module github.com/flash-vision/kafka-message-wranglers
 
 go 1.21.4
 
