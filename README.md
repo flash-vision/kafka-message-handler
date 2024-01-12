@@ -1,4 +1,4 @@
-# kafka-message-helpers
+# kafka-message-handlers
  module of helper functions for converting, validating kafka topic messages
 
 
