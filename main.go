@@ -6,7 +6,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 )
 
-func messageToJson(messageData *kafka.Message) (string, error) {
+func MessageToJson(messageData *kafka.Message) (string, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	// Convert the message value to a byte array
@@ -24,15 +24,15 @@ func messageToJson(messageData *kafka.Message) (string, error) {
 	return string(jsonString), nil
 }
 
-//Convert kafka message to a string
-func messageToString(messageData *kafka.Message) (string, error) {
+// Convert kafka message to a string
+func MessageToString(messageData *kafka.Message) (string, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	return messageValue, nil
 }
 
-//Convert kafka message to a byte array
-func messageToBytes(messageData *kafka.Message) ([]byte, error) {
+// Convert kafka message to a byte array
+func MessageToBytes(messageData *kafka.Message) ([]byte, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	// Convert the message value to a byte array
@@ -40,8 +40,8 @@ func messageToBytes(messageData *kafka.Message) ([]byte, error) {
 	return messageValueBytes, nil
 }
 
-//convert the kafka message to a map
-func messageToMap(messageData *kafka.Message) (map[string]interface{}, error) {
+// convert the kafka message to a map
+func MessageToMap(messageData *kafka.Message) (map[string]interface{}, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	// Convert the message value to a byte array
@@ -54,8 +54,8 @@ func messageToMap(messageData *kafka.Message) (map[string]interface{}, error) {
 	return dat, nil
 }
 
-//return a map of specific fields from the kafka message
-func messageToMapFields(messageData *kafka.Message, fields []string) (map[string]interface{}, error) {
+// return a map of specific fields from the kafka message
+func MessageToMapFields(messageData *kafka.Message, fields []string) (map[string]interface{}, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	// Convert the message value to a byte array
@@ -74,8 +74,8 @@ func messageToMapFields(messageData *kafka.Message, fields []string) (map[string
 	return mapFields, nil
 }
 
-//verify that a kafka message contains specific fields
-func messageContainsFields(messageData *kafka.Message, fields []string) (bool, error) {
+// verify that a kafka message contains specific fields
+func MessageContainsFields(messageData *kafka.Message, fields []string) (bool, error) {
 	// Convert the message value to a string
 	messageValue := string(messageData.Value)
 	// Convert the message value to a byte array
