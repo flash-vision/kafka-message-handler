@@ -9,12 +9,24 @@ The Kafka Message Wranglers module provides a versatile and easy-to-use interfac
 - **Check if Kafka messages contain specific fields.**
 - **Easily extendable interface for additional message processing methods.**
 
+TODO:  The wrangler currently exposes to many methods which should not be called directly.
+
 ## Installation
 To use the Kafka Message Wranglers in your project, you first need to have Go installed. Then, you can import this module into your Go project:
 
 ```go
 import wranglers "github.com/flash-vision/kafkamessagewranglers"
 ```
+The following Wranglers are available:
+
+* JsonWrangler
+* StringWrangler
+* BytesWrangler
+* MapWrangler
+* MapFieldsWrangler
+* ContainsFieldsWrangler
+
+
 
 # Example Usage
 
